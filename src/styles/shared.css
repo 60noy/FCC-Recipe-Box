@@ -1,0 +1,22 @@
+.btn{
+	margin-top: 2%;
+}
+.btn_add_new_recipe{
+}
+.btn_edit{
+	margin-left: 1%;
+}
+
+.title_primary{
+	text-align: center;
+	font-size: 2vw;
+	padding-bottom: 5%;
+}
+
+.title_secondary{
+	text-align: center;
+	font-size: 1.5vw;
+	padding-bottom: 5%;
+}
+
+
