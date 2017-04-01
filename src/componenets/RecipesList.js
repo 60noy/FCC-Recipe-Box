@@ -14,7 +14,6 @@ export default class RecipesList extends Component {
 	}
 
 	deleteRecipe(id){
-		console.log('id', id)
 		let recipes = this.state.recipes;
 		recipes.splice(id,1)
 		this.setState({
@@ -29,13 +28,13 @@ export default class RecipesList extends Component {
 				<List>
 					<Subheader> Recipes </Subheader>
 						{
-							this.state.recipes.map((elem, index) => 
+							this.state.recipes.map((elem, index) =>
 								<Recipe mode={this.props.handleMode}
 								 name={elem.name}
 								 ingredients={elem.ingredients}
 								 key={index}
-								 handleDeleteRecipe={() => alert("DELETE")}
-								 handleEditMode={() => alert("EDIT")} 
+								 handleDeleteRecipe={this.deleteRecipe.bind(this,index)}
+								 handleEditRecipe={this.props.handleEditRecipe(index)}
 								 />
 							)
 						}
@@ -47,6 +46,6 @@ export default class RecipesList extends Component {
 
 
 
-	
+
 
 }

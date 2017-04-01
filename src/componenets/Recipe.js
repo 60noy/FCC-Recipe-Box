@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {ListItem} from 'material-ui/List';
-import RaisedButton from 'material-ui/Rai
-sedButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Ingr from './Ingr';
 import style from '../styles/Recipe.css';
@@ -15,16 +14,22 @@ const buttonModes = (props) => (
 			label: 'delete',
 			rippleColor: '#EF9A9A',
 			onTouchTap: props.handleDeleteRecipe,
-			secondary: true
+			secondary: true,
+			style:{
+			'paddingTop':2
+		}
 		},
 		'edit': {
 			label: 'edit',
 			rippleColor: '#EF9A9A',
-			onTouchTap: props.handleEditMode,
-			secondary: true
-		},
-		'default': {
-			
+			onTouchTap: props.handleEditRecipe,
+			secondary: true,
+			style:{
+			'paddingTop':2
+			}
+	},
+		'default' :{
+
 		}
 	}
 )
@@ -40,14 +45,14 @@ export default class Recipe extends Component {
 		console.log('button modes',buttonModes(this.props)[0]);
 		console.log('mode',currentMode);
 		return (
-				<ListItem 
-					primaryText={this.props.name} 
-					primaryTogglesNestedList={true} 
+				<ListItem
+					primaryText={this.props.name}
+					primaryTogglesNestedList={true}
 					hoverColor="#E0F2F1"
-				  	rightIconButton={mode && mode !=='default' && <FlatButton {...currentMode} />}
-				 nestedItems={this.props.ingredients.map((elem,index) => (<Ingr key={index} name={elem[index]}/>))}/>
+				  rightIconButton={mode && mode !=='default' && <FlatButton {...currentMode} />}
+				 	nestedItems={this.props.ingredients.map((elem,index) => (<Ingr key={index} name={elem[index]}/>))}/>
 
-				
+
 		);
 	}
 }
