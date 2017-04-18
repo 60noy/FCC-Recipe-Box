@@ -18,8 +18,8 @@ export default class Main extends Component {
 			recipes: savedRecipes.generate()
 		}
 		this.handleAddRecipeModal = this.handleAddRecipeModal.bind(this);
-		this.handleEditRecipeModal = this.handleEditRecipeModal.bind(this);
 		this.closeAddModal = this.closeAddModal.bind(this);
+		this.closeEditModal = this.closeEditModal.bind(this);
 	}
 
 	handleAddRecipeModal(isClickOutsideModel){
@@ -27,10 +27,7 @@ export default class Main extends Component {
 		this.setState({showAddRecipeModal});
 		}
 
-	handleEditRecipeModal(isClickOutsideModel){
-		let showEditRecipeModal = !this.state.showEditRecipeModal;
-		this.setState({showEditRecipeModal});
-		}
+
 
 	closeAddModal(){
 		this.setState({showAddRecipeModal: false});
@@ -45,7 +42,7 @@ export default class Main extends Component {
 		this.setState({mode})
 	}
 
-	handleDeleteRecipe = (index) =>{
+	handleDeleteRecipe = (index) => {
 		let recipes = this.state.recipes
 		recipes.splice(index,1)
 		this.setState({recipes})
@@ -58,8 +55,11 @@ export default class Main extends Component {
 		recipes.push(recipe)
 		this.setState({showAddRecipeModal:false,recipes})
 	}
-
+	//
 	handleEditRecipe = (recipe,index) =>{
+		// let showEditRecipeModal = !this.state.showEditRecipeModal
+		// this.setState({showEditRecipeModal})
+		//
 	}
 
 
@@ -70,11 +70,6 @@ export default class Main extends Component {
 					 <NewRecipeModal open={this.state.showAddRecipeModal}
 						  onRequestClose={this.closeAddModal}
 						  addNew={this.handleAddRecipe}/> : null}
-
-				{this.state.showEditRecipeModal ?
-						<EditRecipeModal open={this.state.showEditRecipeModal}
-								onRequestClose={this.closeModal}
-								editRecipe={this.handleEditRecipeModal}/> : null}
 
 				<div className={style.title}>
 				Ingredients

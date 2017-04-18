@@ -14,7 +14,8 @@ import style from '../styles/NewRecipeModal.css';
 export default class NewRecipeModal extends Component {
 	constructor(props) {
 		super(props);
-		const originalRecipe = {...this.props.recipe, index: this.props.index}
+		let originalRecipe = this.props.editRecipe
+		// originalRecipe.index = this.props.index
 		this.state={
 			open: false,
 			title: originalRecipe.title,
@@ -35,7 +36,7 @@ export default class NewRecipeModal extends Component {
 		this.setState({open: false});
 	}
 
-	handleErrorMessages = () =>{
+	handleErrorMessages=() =>{
 		const {ingredients,title} = this.state
 		let isInputOk = true
 		if (ingredients.length === 0 ) {
@@ -92,10 +93,9 @@ export default class NewRecipeModal extends Component {
 
 	render() {
 		let recipe = {name: this.state.title, ingredients : this.state.ingredients}
-		console.log(recipe);
-		const btnAdd = (<FlatButton label="NEW" primary={true} onClick={() => this.editRecipe(recipe)} />)
+		const btnEdit = (<FlatButton label="EDIT" primary={true} onClick={() => this.editRecipe(recipe)} />)
 		return (
-				<Dialog title="Add New Recipe" actions={btnAdd} onRequestClose={this.props.onRequestClose} open={this.props.open}
+				<Dialog title="Edit Recipe" actions={btnEdit} onRequestClose={this.props.onRequestClose} open={this.props.open}
 				 autoScrollBodyContent={true}>
 					<div className={style.container}>
 						<div className={shared.title_secondary}>
