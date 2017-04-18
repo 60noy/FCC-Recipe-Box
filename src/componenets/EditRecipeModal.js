@@ -11,18 +11,19 @@ import shared from '../styles/shared.css';
 import style from '../styles/NewRecipeModal.css';
 
 // modal to add new recipe
-
 export default class NewRecipeModal extends Component {
 	constructor(props) {
 		super(props);
+		const originalRecipe = {...this.props.recipe, index: this.props.index}
 		this.state={
 			open: false,
-			title: "",
-			ingredients : [],
+			title: originalRecipe.title,
+			ingredients : originalRecipe.ingredients,
 			ingredientsBox: "",
 			ingredientsErrorText: "",
 			titleErrorText: ""
 		}
+
 		this.handleClose = this.handleClose.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleAddIngredients = this.handleAddIngredients.bind(this);
@@ -42,7 +43,7 @@ export default class NewRecipeModal extends Component {
 			isInputOk = false
 		}
 		if(title.length === 0){
-			this.setState({titleErrorText: 'Enter title for the ingredient'})
+			this.setState({titleErrorText: 'The title cannot be empty'})
 			isInputOk = false
 		}
 		return isInputOk
@@ -75,10 +76,10 @@ export default class NewRecipeModal extends Component {
 		});
 	}
 
-	addNew = (recipe) => {
+	editRecipe = (recipe) => {
 		// checks whether there are not any errors
 		if (this.handleErrorMessages()) {
-			return this.props.addNew(recipe)
+			return this.props.editRecipe(recipe)
 		}
 	}
 
@@ -92,7 +93,7 @@ export default class NewRecipeModal extends Component {
 	render() {
 		let recipe = {name: this.state.title, ingredients : this.state.ingredients}
 		console.log(recipe);
-		const btnAdd = (<FlatButton label="NEW" primary={true} onClick={() => this.addNew(recipe)} />)
+		const btnAdd = (<FlatButton label="NEW" primary={true} onClick={() => this.editRecipe(recipe)} />)
 		return (
 				<Dialog title="Add New Recipe" actions={btnAdd} onRequestClose={this.props.onRequestClose} open={this.props.open}
 				 autoScrollBodyContent={true}>

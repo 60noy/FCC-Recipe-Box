@@ -1,7 +1,7 @@
 
 export default class savedRecipes{
 	// checks if there are recipes on local storage
-	static isExist() { return (localStorage.getItem('recipes'))}
+	static isExist() { return (localStorage.getItem('recipes').length > 0)}
 	// return the saved recipes
 	static getAll() { return localStorage.getItem('recipes')}
 	// adds item to saved recipes and returns the modified recipe
@@ -20,12 +20,12 @@ export default class savedRecipes{
 	}
 
 	static generate(){
-		return [{name: "Mevin" ,ingredients: ["ingredd", "bluh"]}]
+		return [{name: "Mevin" ,ingredients: ["lol", "aa"]},{name: "Mevin" ,ingredients: ["lol", "aa"]}]
 	}
 
 	static set(recipes){
 		localStorage.setItem('recipes',recipes)
 	}
 
-	
+
 };

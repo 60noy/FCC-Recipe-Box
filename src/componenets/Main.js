@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import shared from '../styles/shared.css';
 import NewRecipeModal from './NewRecipeModal';
+import EditRecipeModal from './EditRecipeModal';
 import savedRecipes from '../actions/savedRecipes';
 
 export default class Main extends Component {
@@ -12,53 +13,83 @@ export default class Main extends Component {
 		super(props);
 		this.state={
 			showAddRecipeModal: false,
-			mode: 'default'
+			showEditRecipeModal: false,
+			mode: 'default',
+			recipes: savedRecipes.generate()
 		}
-		this.handleRecipeModal = this.handleRecipeModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
-		this.handleAddRecipe = this.handleAddRecipe.bind(this);
+		this.handleAddRecipeModal = this.handleAddRecipeModal.bind(this);
+		this.handleEditRecipeModal = this.handleEditRecipeModal.bind(this);
+		this.closeAddModal = this.closeAddModal.bind(this);
 	}
 
-	handleRecipeModal(isClickOutsideModel){
-		let showAddRecipeModal = !showAddRecipeModal;
-		console.log('ckic',isClickOutsideModel);
-		this.setState({showAddRecipeModal: isClickOutsideModel});
-	}
+	handleAddRecipeModal(isClickOutsideModel){
+		let showAddRecipeModal = !this.state.showAddRecipeModal;
+		this.setState({showAddRecipeModal});
+		}
 
-	closeModal(){
+	handleEditRecipeModal(isClickOutsideModel){
+		let showEditRecipeModal = !this.state.showEditRecipeModal;
+		this.setState({showEditRecipeModal});
+		}
+
+	closeAddModal(){
 		this.setState({showAddRecipeModal: false});
 	}
 
-	changeMode(mode){
+	closeEditModal(){
+		this.setState({showEditRecipeModal: false});
+	}
+
+	changeMode(newMode){
+		let mode = this.state.mode === newMode ? 'default' : newMode
 		this.setState({mode})
 	}
 
-	handleAddRecipe(){
-
+	handleDeleteRecipe = (index) =>{
+		let recipes = this.state.recipes
+		recipes.splice(index,1)
+		this.setState({recipes})
 	}
 
-	handleEditRecipe(index){
-		console.log('index goood:' ,index);
+	handleAddRecipe = (recipe)=>{
+		// let recipes = savedRecipes.add(recipe)
+		// savedRecipes.set(recipes)
+		let recipes = this.state.recipes
+		recipes.push(recipe)
+		this.setState({showAddRecipeModal:false,recipes})
 	}
+
+	handleEditRecipe = (recipe,index) =>{
+	}
+
 
 	render() {
 		return (
 			<div className={style.container}>
 				{this.state.showAddRecipeModal ?
 					 <NewRecipeModal open={this.state.showAddRecipeModal}
-						  onRequestClose={this.closeModal}
-						  addRecipe={this.handleAddRecipe}/> : null}
+						  onRequestClose={this.closeAddModal}
+						  addNew={this.handleAddRecipe}/> : null}
+
+				{this.state.showEditRecipeModal ?
+						<EditRecipeModal open={this.state.showEditRecipeModal}
+								onRequestClose={this.closeModal}
+								editRecipe={this.handleEditRecipeModal}/> : null}
+
 				<div className={style.title}>
 				Ingredients
 				</div>
 				<Paper zDepth={1}>
 					<RecipesList
-						handleEditRecipe={this.handleEditRecipe.bind(this)}
 						handleMode={this.state.mode}
+						deleteRecipe={() =>this.handleDeleteRecipe}
+						editRecipe={this.handleEditRecipe}
 						inDeleteMode={this.state.inDeleteMode}
-						inEditMode={this.state.inEditMode}/>
+						inEditMode={this.state.inEditMode}
+						recipes={this.state.recipes}
+					/>
 				</Paper>
-				<RaisedButton label="Add New Recipe" className={shared.btn + ' ' + shared.btn_add_new_recipe} primary={true} onTouchTap={this.handleRecipeModal}/>
+				<RaisedButton label="Add New Recipe" className={shared.btn + ' ' + shared.btn_add_new_recipe} primary={true} onTouchTap={this.handleAddRecipeModal}/>
 				<RaisedButton label="Edit" className={shared.btn + ' ' + shared.btn_edit} onTouchTap={this.changeMode.bind(this,'edit')} secondary={true} />
 				<RaisedButton label="Delete" className={shared.btn + ' ' + shared.btn_edit}  onTouchTap={this.changeMode.bind(this,'delete')}  secondary={true} />
 			</div>

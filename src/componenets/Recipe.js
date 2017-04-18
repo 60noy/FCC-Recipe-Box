@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Ingr from './Ingr';
 import style from '../styles/Recipe.css';
-import {Paper} from 'material-ui';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
 
@@ -59,10 +58,12 @@ export default class Recipe extends Component {
 					primaryText={this.props.name}
 					primaryTogglesNestedList={true}
 					hoverColor="#E0F2F1"
-				  	rightIconButton={mode && mode !=='default' && <FlatButton {...currentMode} />}
-				 	nestedItems={this.props.ingredients.map((elem,index) => (<Ingr key={index} 
-				 	name={elem[index]} 
-				 	delete={this.deleteIngredient.bind(this,index)}/>))}/>
+				  rightIconButton={mode && mode !=='default' ? <FlatButton {...currentMode}/>: null}
+				 	nestedItems={this.props.ingredients.map((elem,index) => (
+						<Ingr key={index}
+				 					name={elem}
+				 					delete={this.deleteIngredient.bind(this,index)}/>)
+				)}/>
 
 
 		);
